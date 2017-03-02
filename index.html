@@ -12,10 +12,10 @@
 
 <body>
     <div class="container">
-        <div class='col-sm-6 col-xs-12'>
+        <div id="spotify" class='col-sm-6 col-xs-12'>
             <iframe class="spotify" src="https://embed.spotify.com/?uri=spotify:user:spotify:playlist:3rgsDhGHZxZ9sB9DQWQfuf" frameborder="0" allowtransparency="true"></iframe>
         </div>
-        <div class="col-sm-6 col-xs-12">
+        <div id="timer" class="col-sm-6 col-xs-12">
             <div class="m-wrap tx center">
                 <style>
                     body {
@@ -159,7 +159,7 @@
                     }
                     /* hide inputs offscreen, but at the same vertical positions as the correpsonding labels, so that tabbing scrolls the viewport as expected */
                     
-                    input {
+                    .input {
                         display: block;
                         height: 53px;
                         margin: 0 0 -53px -9999px;
@@ -168,7 +168,7 @@
                         counter-increment: undone-items;
                     }
                     
-                    input:checked {
+                    .input:checked {
                         order: 2;
                         counter-increment: done-items;
                     }
@@ -194,16 +194,16 @@
                     }
                     
                     label:hover,
-                    input:focus+ label {
+                    .input:focus+ label {
                         background-color: rgba(255, 255, 255, .2);
                     }
                     
-                    input:checked+ label {
+                    .input:checked+ label {
                         order: 2;
                         animation: done .5s;
                     }
                     
-                    input:checked+ label::before {
+                    .input:checked+ label::before {
                         content: '\f058';
                         /* circle checkmark */
                     }
@@ -424,33 +424,47 @@
 
 
     <div class="container">
-        <div class="col-sm-6 col-xs-12">
+        <div id="list" class="col-sm-6 col-xs-12">
             <h1>Will's Summer To-Do List</h1>
             <div class="items">
-                <input id="item1" type="checkbox" checked>
+                <input class="input" id="item1" type="checkbox" checked>
                 <label for="item1">Create a to-do list</label>
 
-                <input id="item2" type="checkbox">
+                <input class="input" id="item2" type="checkbox">
                 <label for="item2">Take down Christmas tree</label>
 
-                <input id="item3" type="checkbox">
+                <input class="input" id="item3" type="checkbox">
                 <label for="item3">Learn Ember.js</label>
 
-                <input id="item4" type="checkbox">
+                <input class="input" id="item4" type="checkbox">
                 <label for="item4">Binge watch every episode of MacGyver</label>
 
-                <input id="item5" type="checkbox">
+                <input class="input" id="item5" type="checkbox">
                 <label for="item5">Alphabetize everything in the fridge</label>
 
-                <input id="item6" type="checkbox">
+                <input class="input" id="item6" type="checkbox">
                 <label for="item6">Do 10 pull-ups without dropping</label>
 
                 <h2 class="done" aria-hidden="true">Done</h2>
                 <h2 class="undone" aria-hidden="true">Not Done</h2>
             </div>
         </div>
+        <div class="col-xs-12 col-sm-6 form center">
+            <form class="mobile-form">
+                <h1>Your Settings</h1>
+                <input class="toggle" type="checkbox" name="spotify" value="Bike">Spotify<br>
+                <input class="toggle" type="checkbox" name="timer" value="Car">Pomodoro Timer<br>
+                <input class="toggle" type="checkbox" name="list" value="Car">Todo list <br>
+            </form>
+            <form class="desk-form">
+                <h1>Your Settings</h1>
+                <input class="toggle" type="checkbox" name="spotify" value="Bike">Spotify<br>
+                <input class="toggle" type="checkbox" name="timer" value="Car">Pomodoro Timer<br>
+                <input class="toggle" type="checkbox" name="list" value="Car">Todo list <br>
+            </form>
+            <a id="startButton">Opus</a>
 
-
+        </div>
     </div>
 
     <style>
@@ -462,9 +476,7 @@
             height: 100%;
         }
         
-        .m-wrap {
-
-        }
+        .m-wrap {}
         
         html .tx,
         html .m-wrap .o-watch-wrap,
@@ -678,7 +690,7 @@
     </style>
     <script>
         /*Inspired by the Dribble shot: "Timer UI Design (IWatch)" by Mark Gerkules
-                         https://dribbble.com/shots/2926263-Timer-UI-Design-IWatch*/
+                                                 https://dribbble.com/shots/2926263-Timer-UI-Design-IWatch*/
 
         $(document).ready(function() {
             var timer = 'true',
@@ -687,8 +699,20 @@
                 sec = 0,
                 perc = 612,
                 percm = perc;
-
-            startTimer(timer);
+            var settings = {
+                "spotify": false,
+                "timer": false,
+                "list": false
+            };
+            var curForm = $(".desk-form");
+            //know which form i want to show / hide
+            if ($(".desk-form").is(":visible")) {
+                curForm = $(".desk-form");
+            }
+            else{
+                curForm =$("mobile-form");
+            }
+            //startTimer(timer);
             $('.o-opt-btn.display').html(mmin);
             $('.t-time').text(min + ':0' + sec);
             $('.oop').text('of ' + mmin);
@@ -724,7 +748,7 @@
                 $('.o-opt-btn.display').html(mmin);
                 $('.oop').text('of ' + mmin);
             });
-
+            $("#startButton").on('click',beProductive);
             function startTimer(func) {
                 timer = !timer;
                 if (func) {
@@ -763,7 +787,33 @@
 
                 }
             };
-
+            //check settings and update array
+            $(".toggle").on("click", function() {
+                var e = $(this);
+                var name = e.attr('name');
+                console.log(name);
+                if (e.is(":checked")) {
+                    settings[name] = true;
+                } else {
+                    settings[name] = false;
+                }
+            });
+            //function to run when the button is pushed
+            //loop through array in order to determine visiblity of elements
+            function beProductive(){
+               var arr = Object.keys(settings);
+            arr.map(function(key){
+                console.log(settings[key]);
+                if(settings[key] == false){
+                    $("#"+key).hide();
+                }
+                else{
+                    $("#"+key).show();
+                }
+            })
+            sec= 0;
+            startTimer(timer);
+            }
         });
 
     </script>
