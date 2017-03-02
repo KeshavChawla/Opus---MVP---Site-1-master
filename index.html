@@ -459,8 +459,11 @@
             <form class="desk-form">
                 <h1>Your Settings</h1>
                 <input class="toggle" type="checkbox" name="spotify" value="Bike">Spotify<br>
-                <input class="toggle" type="checkbox" name="timer" value="Car">Pomodoro Timer<br>
+                <input class="toggle" type="checkbox" name="timer" value="Car">Pomodoro Timer&nbsp;
+                <input id="pomodoro" class="numfield" type="number" value="15"><br>
                 <input class="toggle" type="checkbox" name="list" value="Car">Todo list <br>
+                <input id="prodHour" class="numfield" type="number"> Hours &nbsp;&nbsp;
+                <input id="prodMin" class="numfield" type="number">Minutes
             </form>
             <a id="startButton">Opus</a>
 
@@ -694,7 +697,7 @@
 
         $(document).ready(function() {
             var timer = 'true',
-                mmin = 15,
+                mmin = 45,
                 min = 0,
                 sec = 0,
                 perc = 612,

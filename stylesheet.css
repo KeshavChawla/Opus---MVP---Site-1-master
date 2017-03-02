@@ -198,3 +198,6 @@ body {
     text-decoration: none;
     background-color:aqua;
 }
+.numfield{
+    max-width: 30px;
+}
