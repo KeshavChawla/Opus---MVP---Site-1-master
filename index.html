@@ -1,720 +1,770 @@
 <!DOCTYPE html>
-<head>
 
-<link rel="stylesheet" href="stylesheet.css">
-<link rel="stylesheet" href="roundslider.css">
+<head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="roundslider.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
 </head>
 
-</head>
 <!-- https://hastebin.com/izulavejen.css -->
+
 <body>
-
-<iframe src="https://embed.spotify.com/?uri=spotify:user:spotify:playlist:3rgsDhGHZxZ9sB9DQWQfuf" width="100%" height="380" frameborder="0" allowtransparency="true"></iframe>
-
-<div class="container">
-  <h1>Will's Summer To-Do List</h1>
-  <div class="items">
-    <input id="item1" type="checkbox" checked>
-    <label for="item1">Create a to-do list</label>
-
-    <input id="item2" type="checkbox">
-    <label for="item2">Take down Christmas tree</label>
-
-    <input id="item3" type="checkbox">
-    <label for="item3">Learn Ember.js</label>
-
-    <input id="item4" type="checkbox">
-    <label for="item4">Binge watch every episode of MacGyver</label>
-
-    <input id="item5" type="checkbox">
-    <label for="item5">Alphabetize everything in the fridge</label>
-
-    <input id="item6" type="checkbox">
-    <label for="item6">Do 10 pull-ups without dropping</label>
-
-    <h2 class="done" aria-hidden="true">Done</h2>
-    <h2 class="undone" aria-hidden="true">Not Done</h2>
-  </div>
-
-</div>
-<div class="m-wrap tx">
-<style>
-body {
-  background: #eae8e9;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 280px;
-    height: 280px;
-    background-image: linear-gradient(-47deg, #656565 18%, #BBBBBB 33%, #757575 51%, #616161 66%, #C1C1C1 83%, #83837e 90%);
-    border-radius: 50%;
-    z-index: 1;
-    border: 2px solid #98989a;
-    box-shadow: 0 1px 12px 1px rgba(0,0,0,.26);
-  }
-
-  &::after {
-    background-image: linear-gradient(140deg, rgba(255,255,255,.29), rgba(255,255,255,.13) 37%, rgba(255,255,255,0) 37.1%);
-    width: 247px;
-    height: 247px;
-    z-index: 4;
-    border: none;
-    pointer-events: none;
-  }
-
-}
-#slider {
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: Roboto, sans-serif;
-
-  &::before, &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 250px;
-    height: 250px;
-    background: #000;
-    border-radius: 50%;
-    z-index: 1;
-  }
-
-  &::after {
-    z-index: 2;
-    box-shadow: inset 0 0 5px #000;
-    background: linear-gradient(-190deg, rgba(255, 255, 255, .3),  rgba(255, 255, 255, 0) 50%);
-  }
-}
-
-#animation1.rs-animation .rs-transition  {
-  transition: all .1s ease-in-out;
-}
-
-
-@import url(http://fonts.googleapis.com/css?family=Roboto:500,700);
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-html {
-  min-height: 100%;
-}
-
-body {
-  margin: 20px;
-  color: #435757;
-  background: linear-gradient(-20deg, #d0b782 20%, #a0cecf 80%);
-  font: 500 .7em/1.2 'Roboto', sans-serif;
-}
-
-.container {
-  max-width: 550px;
-
-  margin: 100 auto;
-  border-top: 5px solid #435757;
-  background-color: rgba(255, 255, 255, .2);
-  box-shadow: 0 0 20px rgba(0, 0, 0, .1);
-  user-select: none;
-}
-
-h1 {
-  margin: 0;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, .4);
-  font-size: 1.8em;
-  text-align: center;
-}
-
-.items {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  counter-reset: done-items undone-items;
-}
-
-h2 {
-  position: relative;
-  margin: 0;
-  padding: 10px 0;
-  font-size: 1.2em;
-}
-
-h2::before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 10px;
-  bottom: 10px;
-  left: -20px;
-  width: 5px;
-  background-color: #435757;
-}
-
-h2::after {
-  display: block;
-  float: right;
-  font-weight: normal;
-}
-
-.done {
-  order: 1;
-}
-
-.done::after {
-  content: ' (' counter(done-items) ')';
-}
-
-.undone {
-  order: 3;
-}
-
-.undone::after {
-  content: ' (' counter(undone-items) ')';
-}
-
-/* hide inputs offscreen, but at the same vertical positions as the correpsonding labels, so that tabbing scrolls the viewport as expected */
-input {
-  display: block;
-  height: 53px;
-  margin: 0 0 -53px -9999px;
-  order: 4;
-  outline: none;
-  counter-increment: undone-items;
-}
-
-input:checked {
-  order: 2;
-  counter-increment: done-items;
-}
-
-label {
-  display: block;
-  position: relative;
-  padding: 15px 0 15px 45px;
-  border-top: 1px dashed #fff;
-  order: 4;
-  cursor: pointer;
-  animation: undone .5s;
-}
-
-label::before {
-  content: '\f10c'; /* circle outline */
-  display: block;
-  position: absolute;
-  top: 11px;
-  left: 10px;
-  font: 1.5em 'FontAwesome';
-}
-
-label:hover, input:focus + label {
-  background-color: rgba(255, 255, 255, .2);
-}
-
-input:checked + label {
-  order: 2;
-  animation: done .5s;
-}
-
-input:checked + label::before {
-  content: '\f058'; /* circle checkmark */
-}
-
-@keyframes done {
-  0% {
-    opacity: 0;
-    background-color: rgba(255, 255, 255, .4);
-    transform: translateY(20px);
-  }
-  50% {
-    opacity: 1;
-    background-color: rgba(255, 255, 255, .4);
-  }
-}
-
-@keyframes undone {
-  0% {
-    opacity: 0;
-    background-color: rgba(255, 255, 255, .4);
-    transform: translateY(-20px);
-  }
-  50% {
-    opacity: 1;
-    background-color: rgba(255, 255, 255, .4);
-  }
-}</style>
-<style>
-body {
-  background: #eae8e9;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 280px;
-    height: 280px;
-    background-image: linear-gradient(-47deg, #656565 18%, #BBBBBB 33%, #757575 51%, #616161 66%, #C1C1C1 83%, #83837e 90%);
-    border-radius: 50%;
-    z-index: 1;
-    border: 2px solid #98989a;
-    box-shadow: 0 1px 12px 1px rgba(0,0,0,.26);
-  }
-
-  &::after {
-    background-image: linear-gradient(140deg, rgba(255,255,255,.29), rgba(255,255,255,.13) 37%, rgba(255,255,255,0) 37.1%);
-    width: 247px;
-    height: 247px;
-    z-index: 4;
-    border: none;
-    pointer-events: none;
-  }
-
-}
-#slider {
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: Roboto, sans-serif;
-
-  &::before, &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 250px;
-    height: 250px;
-    background: #000;
-    border-radius: 50%;
-    z-index: 1;
-  }
-
-  &::after {
-    z-index: 2;
-    box-shadow: inset 0 0 5px #000;
-    background: linear-gradient(-190deg, rgba(255, 255, 255, .3),  rgba(255, 255, 255, 0) 50%);
-  }
-}
-
-#animation1.rs-animation .rs-transition  {
-  transition: all .1s ease-in-out;
-}
-
-.rs-gradient, .rs-gradient:after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 170px;
-  height: 170px;
-  background: hsl(209, 100%, 42%);
-  box-shadow: inset 0 -2px 5px rgba(0, 0, 0, .2), inset 0 3px 5px rgba(0, 0, 0, .1), 0 0 3px #000;
-  border-radius: 50%;
-  z-index: 3;
-  opacity: .8
-}
-
-.rs-gradient:after {
-  background: linear-gradient(0, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
-}
-
-.rs-path-color {
-  background: #444;
-}
-
-.rs-range-color {
-  background: #fff;
-  transition: background .02s ease-in-out;
-}
-
-.rs-border {
-  border: 1px solid #000;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, .3);
-}
-
-.rs-seperator {
-  border: none;
-}
-
-.rs-control .rs-split .rs-path, .rs-control .rs-overlay1, .rs-control .rs-overlay2 {
-
-}
-
-.rs-border, .rs-bg-color {
-  background: #000;
-}
-
-.rs-tooltip-text {
-  font-family: Roboto, sans-serif;
-  font-size: 53px;
-  border-radius: 7px;
-  transition: background .02s ease-in-out;
-  color: #fff;
-  pointer-events: none;
-  transform: translateY(3px);
-}
-<<<<<<< HEAD
-=======
-
-.rs-tooltip-text:before {
-  position: absolute;
-  left: 3px;
-  top: -11px;
-  content: 'HEATING';
-  font-size: 12px;
-}
-
-.rs-handle {
-
-}
-
-.rs-handle {
-  background: none;
-  border: none;
-  background: none;
-  width: 60px;
-  height: 60px;
-
-  &::after  {
-    background: #fff;
-    border-radius: 0;
-    border: none;
-    height: 1px;
-    width: 14px;
-    margin: 8px 0 0 3px;
-  }
-}
-
-.rs-handle.rs-move {
-  cursor: -webkit-grab;
-  cursor: -moz-grab;
-}
-
-</style>
-
-    <div class="o-watch-wrap">
-        <div class="watch-ui">
-            <div class="o-ring">
-                <div class="o-timer-wrap">
-                    <div class="ring-wrap">
-                        <svg class="c-t" width="200" height="200">
+    <div class="container">
+        <div class='col-sm-6 col-xs-12'>
+            <iframe class="spotify" src="https://embed.spotify.com/?uri=spotify:user:spotify:playlist:3rgsDhGHZxZ9sB9DQWQfuf" frameborder="0" allowtransparency="true"></iframe>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <div class="m-wrap tx center">
+                <style>
+                    body {
+                        background: #eae8e9;
+                        &::before,
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            width: 280px;
+                            height: 280px;
+                            background-image: linear-gradient(-47deg, #656565 18%, #BBBBBB 33%, #757575 51%, #616161 66%, #C1C1C1 83%, #83837e 90%);
+                            border-radius: 50%;
+                            z-index: 1;
+                            border: 2px solid #98989a;
+                            box-shadow: 0 1px 12px 1px rgba(0, 0, 0, .26);
+                        }
+                        &::after {
+                            background-image: linear-gradient(140deg, rgba(255, 255, 255, .29), rgba(255, 255, 255, .13) 37%, rgba(255, 255, 255, 0) 37.1%);
+                            width: 247px;
+                            height: 247px;
+                            z-index: 4;
+                            border: none;
+                            pointer-events: none;
+                        }
+                    }
+                    
+                    #slider {
+                        position: absolute;
+                        z-index: 2;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        font-family: Roboto, sans-serif;
+                        &::before,
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            width: 250px;
+                            height: 250px;
+                            background: #000;
+                            border-radius: 50%;
+                            z-index: 1;
+                        }
+                        &::after {
+                            z-index: 2;
+                            box-shadow: inset 0 0 5px #000;
+                            background: linear-gradient(-190deg, rgba(255, 255, 255, .3), rgba(255, 255, 255, 0) 50%);
+                        }
+                    }
+                    
+                    #animation1.rs-animation .rs-transition {
+                        transition: all .1s ease-in-out;
+                    }
+                    
+                    @import url(http://fonts.googleapis.com/css?family=Roboto:500,700);
+                    *,
+                    *::before,
+                    *::after {
+                        box-sizing: border-box;
+                    }
+                    
+                    html {
+                        min-height: 100%;
+                    }
+                    
+                    body {
+                        margin: 20px;
+                        color: #435757;
+                        background: linear-gradient(-20deg, #d0b782 20%, #a0cecf 80%);
+                        font: 500 .7em/1.2 'Roboto', sans-serif;
+                    }
+                    /*.container {
+                max-width: 550px;
+                margin: 100 auto;
+                border-top: 5px solid #435757;
+                background-color: rgba(255, 255, 255, .2);
+                box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+                user-select: none;
+            }*/
+                    
+                    h1 {
+                        margin: 0;
+                        padding: 20px;
+                        background-color: rgba(255, 255, 255, .4);
+                        font-size: 1.8em;
+                        text-align: center;
+                    }
+                    
+                    .items {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 20px;
+                        font-size: 12px;
+                        counter-reset: done-items undone-items;
+                    }
+                    
+                    h2 {
+                        position: relative;
+                        margin: 0;
+                        padding: 10px 0;
+                        font-size: 1.2em;
+                    }
+                    
+                    h2::before {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        top: 10px;
+                        bottom: 10px;
+                        left: -20px;
+                        width: 5px;
+                        background-color: #435757;
+                    }
+                    
+                    h2::after {
+                        display: block;
+                        float: right;
+                        font-weight: normal;
+                    }
+                    
+                    .done {
+                        order: 1;
+                    }
+                    
+                    .done::after {
+                        content: ' (' counter(done-items) ')';
+                    }
+                    
+                    .undone {
+                        order: 3;
+                    }
+                    
+                    .undone::after {
+                        content: ' (' counter(undone-items) ')';
+                    }
+                    /* hide inputs offscreen, but at the same vertical positions as the correpsonding labels, so that tabbing scrolls the viewport as expected */
+                    
+                    input {
+                        display: block;
+                        height: 53px;
+                        margin: 0 0 -53px -9999px;
+                        order: 4;
+                        outline: none;
+                        counter-increment: undone-items;
+                    }
+                    
+                    input:checked {
+                        order: 2;
+                        counter-increment: done-items;
+                    }
+                    
+                    label {
+                        display: block;
+                        position: relative;
+                        padding: 15px 0 15px 45px;
+                        border-top: 1px dashed #fff;
+                        order: 4;
+                        cursor: pointer;
+                        animation: undone .5s;
+                    }
+                    
+                    label::before {
+                        content: '\f10c';
+                        /* circle outline */
+                        display: block;
+                        position: absolute;
+                        top: 11px;
+                        left: 10px;
+                        font: 1.5em 'FontAwesome';
+                    }
+                    
+                    label:hover,
+                    input:focus+ label {
+                        background-color: rgba(255, 255, 255, .2);
+                    }
+                    
+                    input:checked+ label {
+                        order: 2;
+                        animation: done .5s;
+                    }
+                    
+                    input:checked+ label::before {
+                        content: '\f058';
+                        /* circle checkmark */
+                    }
+                    
+                    @keyframes done {
+                        0% {
+                            opacity: 0;
+                            background-color: rgba(255, 255, 255, .4);
+                            transform: translateY(20px);
+                        }
+                        50% {
+                            opacity: 1;
+                            background-color: rgba(255, 255, 255, .4);
+                        }
+                    }
+                    
+                    @keyframes undone {
+                        0% {
+                            opacity: 0;
+                            background-color: rgba(255, 255, 255, .4);
+                            transform: translateY(-20px);
+                        }
+                        50% {
+                            opacity: 1;
+                            background-color: rgba(255, 255, 255, .4);
+                        }
+                    }
+
+                </style>
+                <style>
+                    body {
+                        background: #eae8e9;
+                        &::before,
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            width: 280px;
+                            height: 280px;
+                            background-image: linear-gradient(-47deg, #656565 18%, #BBBBBB 33%, #757575 51%, #616161 66%, #C1C1C1 83%, #83837e 90%);
+                            border-radius: 50%;
+                            z-index: 1;
+                            border: 2px solid #98989a;
+                            box-shadow: 0 1px 12px 1px rgba(0, 0, 0, .26);
+                        }
+                        &::after {
+                            background-image: linear-gradient(140deg, rgba(255, 255, 255, .29), rgba(255, 255, 255, .13) 37%, rgba(255, 255, 255, 0) 37.1%);
+                            width: 247px;
+                            height: 247px;
+                            z-index: 4;
+                            border: none;
+                            pointer-events: none;
+                        }
+                    }
+                    
+                    #slider {
+                        position: absolute;
+                        z-index: 2;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        font-family: Roboto, sans-serif;
+                        &::before,
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            width: 250px;
+                            height: 250px;
+                            background: #000;
+                            border-radius: 50%;
+                            z-index: 1;
+                        }
+                        &::after {
+                            z-index: 2;
+                            box-shadow: inset 0 0 5px #000;
+                            background: linear-gradient(-190deg, rgba(255, 255, 255, .3), rgba(255, 255, 255, 0) 50%);
+                        }
+                    }
+                    
+                    #animation1.rs-animation .rs-transition {
+                        transition: all .1s ease-in-out;
+                    }
+                    
+                    .rs-gradient,
+                    .rs-gradient:after {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 170px;
+                        height: 170px;
+                        background: hsl(209, 100%, 42%);
+                        box-shadow: inset 0 -2px 5px rgba(0, 0, 0, .2), inset 0 3px 5px rgba(0, 0, 0, .1), 0 0 3px #000;
+                        border-radius: 50%;
+                        z-index: 3;
+                        opacity: .8
+                    }
+                    
+                    .rs-gradient:after {
+                        background: linear-gradient(0, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4));
+                    }
+                    
+                    .rs-path-color {
+                        background: #444;
+                    }
+                    
+                    .rs-range-color {
+                        background: #fff;
+                        transition: background .02s ease-in-out;
+                    }
+                    
+                    .rs-border {
+                        border: 1px solid #000;
+                        box-shadow: inset 0 2px 6px rgba(0, 0, 0, .3);
+                    }
+                    
+                    .rs-seperator {
+                        border: none;
+                    }
+                    
+                    .rs-control .rs-split .rs-path,
+                    .rs-control .rs-overlay1,
+                    .rs-control .rs-overlay2 {}
+                    
+                    .rs-border,
+                    .rs-bg-color {
+                        background: #000;
+                    }
+                    
+                    .rs-tooltip-text {
+                        font-family: Roboto, sans-serif;
+                        font-size: 53px;
+                        border-radius: 7px;
+                        transition: background .02s ease-in-out;
+                        color: #fff;
+                        pointer-events: none;
+                        transform: translateY(3px);
+                    }
+                    
+                    <<<<<<< HEAD=======.rs-tooltip-text:before {
+                        position: absolute;
+                        left: 3px;
+                        top: -11px;
+                        content: 'HEATING';
+                        font-size: 12px;
+                    }
+                    
+                    .rs-handle {}
+                    
+                    .rs-handle {
+                        background: none;
+                        border: none;
+                        background: none;
+                        width: 60px;
+                        height: 60px;
+                        &::after {
+                            background: #fff;
+                            border-radius: 0;
+                            border: none;
+                            height: 1px;
+                            width: 14px;
+                            margin: 8px 0 0 3px;
+                        }
+                    }
+                    
+                    .rs-handle.rs-move {
+                        cursor: -webkit-grab;
+                        cursor: -moz-grab;
+                    }
+
+                </style>
+
+                <div class="o-watch-wrap">
+                    <div class="watch-ui">
+                        <div class="o-ring">
+                            <div class="o-timer-wrap">
+                                <div class="ring-wrap">
+                                    <svg class="c-t" width="200" height="200">
 					  <circle class="c-c" cx="90" cy="100" r="97.5" transform="rotate(-90, 95, 95)"/>
 					</svg>
-                    </div>
-                    <div class="o-timer">
-                        <span class="t-time"></span>
-                        <span class="oop"></span>
-                    </div>
-                </div>
-                <div class="t-options">
-                    <span class="t-options-time">
+                                </div>
+                                <div class="o-timer">
+                                    <span class="t-time"></span>
+                                    <span class="oop"></span>
+                                </div>
+                            </div>
+                            <div class="t-options">
+                                <span class="t-options-time">
 					<span class="btn b-dec o-opt-btn b-revc glyphicon glyphicon-play"></span>
-                    <span class="o-opt-btn display"></span>
-                    <span class="btn b-inc o-opt-btn glyphicon glyphicon-play"></span>
-                    </span>
-                </div>
-            </div>
-            <div class="o-controllers">
-                <button class="btn button sp-btn repeat-btn ">
+                                <span class="o-opt-btn display"></span>
+                                <span class="btn b-inc o-opt-btn glyphicon glyphicon-play"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="o-controllers">
+                            <button class="btn button sp-btn repeat-btn ">
 					<span class="glyphicon glyphicon-repeat"></span>
 				</button>
-                <button class="btn button sp-btn pause-btn ">
+                            <button class="btn button sp-btn pause-btn ">
 					<span class="in-btn glyphicon glyphicon-pause"></span>
 				</button>
-                <button class="btn button sp-btn menu-btn ">
+                            <button class="btn button sp-btn menu-btn ">
 					<span class="glyphicon glyphicon-menu-hamburger"></span>
 				</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
-</div>
-<style>
-@import "https://fonts.googleapis.com/css?family=Baumans";
-html, html body, html {
-  width: 100%;
-  height: 100%;
 
-}
 
-.m-wrap {
-  padding-left: 250px;
-}
-html .tx, html .m-wrap .o-watch-wrap, html .m-wrap .o-watch-wrap .watch-ui .o-ring .ring-wrap, html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer, html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time, html .m-wrap .o-watch-wrap .o-controllers .in-btn {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-html .t-center, html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer, html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time {
-  text-align: center;
-}
-html .m-wrap {
-  color: #EDEDEF;
+    <div class="container">
+        <div class="col-sm-6 col-xs-12">
+            <h1>Will's Summer To-Do List</h1>
+            <div class="items">
+                <input id="item1" type="checkbox" checked>
+                <label for="item1">Create a to-do list</label>
 
-}
-html .m-wrap .o-watch-wrap {
-  width: 350px;
-  height: 400px;
-  background-color: #56259E;
-  background: -webkit-linear-gradient(to bottom, #7e49c8, #56259E 50%);
-  background: -o-linear-gradient(to bottom, #7e49c8, #56259E 50%);
-  background: -moz-linear-gradient(to bottom, #7e49c8, #56259E 50%);
-  background: linear-gradient(to bottom, #7e49c8, #56259E 50%);
-  border-radius: 25px;
-  -webkit-box-shadow: 0px 0px 5px 0px black;
-  -moz-box-shadow: 0px 0px 5px 0px black;
-  box-shadow: 0px 0px 5px 0px black;
-  border: 3px solid;
-}
-html .m-wrap .o-watch-wrap .menu-open .t-options {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-html .m-wrap .o-watch-wrap .menu-open .o-timer-wrap {
-  top: -15px !important;
-  opacity: 0;
-}
-html .m-wrap .o-watch-wrap .watch-ui {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  margin: auto;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer-wrap {
-  position: relative;
-  top: 0;
-  -webkit-transition: opacity .5s linear, top .5s linear;
-  transition: opacity .5s linear, top .5s linear;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .ring-wrap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .ring-wrap .c-t {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .ring-wrap .c-t .c-c {
-  fill: transparent;
-  stroke: #EDEDEF;
-  stroke-width: 5;
-  stroke-dasharray: 612;
-  stroke-dashoffset: 612;
-  -webkit-transition: stroke-dashoffset 1s linear, opacity 1s linear;
-  transition: stroke-dashoffset 1s linear, opacity 1s linear;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer, html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time {
-  font-size: 60px;
-  width: 200px;
-  height: 200px;
-  border: 5px solid #7e49c8;
-  border-radius: 50%;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer .t-time, html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time .t-time {
-  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer .oop, html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time .oop {
-  position: absolute;
-  bottom: 35px;
-  font-size: 18px;
-  color: #7e49c8;
-  left: 0;
-  right: 0;
-  margin: auto;
-  cursor: default;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options {
-  position: absolute;
-  top: 0px;
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transition: opacity .3s linear, visibility .3s linear;
-  transition: opacity .3s linear, visibility .3s linear;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .b-revc {
-  transform: rotate(180deg);
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .o-opt-btn {
-  box-shadow: none;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .o-opt-btn:hover, html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .o-opt-btn:focus {
-  color: inherit;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .o-opt-btn:active {
-  color: lightgrey;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .o-opt-btn.display {
-  min-width: 70px;
-  cursor: default;
-  color: #EDEDEF;
-}
-html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time {
-  border: none;
-}
-html .m-wrap .o-watch-wrap .o-controllers {
-  text-align: center;
-}
-html .m-wrap .o-watch-wrap .o-controllers .sp-btn {
-  position: relative;
-  background: none;
-  font-size: 16px;
-  outline: none;
-  box-shadow: none;
-}
-html .m-wrap .o-watch-wrap .o-controllers .sp-btn:hover, html .m-wrap .o-watch-wrap .o-controllers .sp-btn:focus {
-  color: inherit;
-}
-html .m-wrap .o-watch-wrap .o-controllers .sp-btn:active {
-  color: #d2d2d7;
-}
-html .m-wrap .o-watch-wrap .o-controllers .pause-btn {
-  font-size: 30px;
-  width: 60px;
-  height: 60px;
-  margin: auto;
-  background: #5fdeae;
-  border-radius: 50%;
-  margin-top: -20px;
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
-}
-html .m-wrap .o-watch-wrap .o-controllers .pause-btn:active {
-  background: #35d599;
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
-}
-html .m-wrap .o-watch-wrap .o-controllers .in-btn {
-  position: absolute;
-  top: -1px;
-  left: 2px;
-  bottom: 0px;
-  right: 0;
-}
-</style>
-<script>
-/*Inspired by the Dribble shot: "Timer UI Design (IWatch)" by Mark Gerkules
- https://dribbble.com/shots/2926263-Timer-UI-Design-IWatch*/
+                <input id="item2" type="checkbox">
+                <label for="item2">Take down Christmas tree</label>
 
-$(document).ready(function() {
-    var timer = 'true',
-        mmin = 15,
-        min = 0,
-        sec = 0,
-        perc = 612,
-        percm = perc;
+                <input id="item3" type="checkbox">
+                <label for="item3">Learn Ember.js</label>
 
-    startTimer(timer);
-    $('.o-opt-btn.display').html(mmin);
-    $('.t-time').text(min + ':0' + sec);
-    $('.oop').text('of ' + mmin);
+                <input id="item4" type="checkbox">
+                <label for="item4">Binge watch every episode of MacGyver</label>
 
-    $('.pause-btn').on('click', function() {
-        startTimer(timer);
-        if ($('.watch-ui').hasClass('menu-open'))
-            $('.watch-ui').removeClass('menu-open');
-    });
+                <input id="item5" type="checkbox">
+                <label for="item5">Alphabetize everything in the fridge</label>
 
-    $('.repeat-btn').on('click', function() {
-        min = 0;
-        sec = 0;
-        perc = 612;
-        if ($('.watch-ui').hasClass('menu-open'))
-            $('.watch-ui').removeClass('menu-open');
-        $('.c-c').css('stroke-dashoffset', perc);
-        $('.t-time').text(min + ':0' + sec);
-    });
+                <input id="item6" type="checkbox">
+                <label for="item6">Do 10 pull-ups without dropping</label>
 
-    $('.menu-btn').on('click', function() {
-        $('.watch-ui').toggleClass('menu-open');
-    });
+                <h2 class="done" aria-hidden="true">Done</h2>
+                <h2 class="undone" aria-hidden="true">Not Done</h2>
+            </div>
+        </div>
 
-    $('.o-opt-btn').on('click', function() {
-        if ($(this).hasClass('b-inc')) {
-            if (mmin < 99)
-                mmin++;
-        } else if ($(this).hasClass('b-dec')) {
-            if (mmin > 1)
-                mmin--;
+
+    </div>
+
+    <style>
+        @import "https://fonts.googleapis.com/css?family=Baumans";
+        html,
+        html body,
+        html {
+            width: 100%;
+            height: 100%;
         }
-        $('.o-opt-btn.display').html(mmin);
-        $('.oop').text('of ' + mmin);
-    });
+        
+        .m-wrap {
 
-    function startTimer(func) {
-        timer = !timer;
-        if (func) {
+        }
+        
+        html .tx,
+        html .m-wrap .o-watch-wrap,
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .ring-wrap,
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer,
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time,
+        html .m-wrap .o-watch-wrap .o-controllers .in-btn {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+        
+        html .t-center,
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer,
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time {
+            text-align: center;
+        }
+        
+        html .m-wrap {
+            color: #EDEDEF;
+        }
+        
+        html .m-wrap .o-watch-wrap {
+            width: 350px;
+            height: 350px;
+            background-color: #56259E;
+            background: -webkit-linear-gradient(to bottom, #7e49c8, #56259E 50%);
+            background: -o-linear-gradient(to bottom, #7e49c8, #56259E 50%);
+            background: -moz-linear-gradient(to bottom, #7e49c8, #56259E 50%);
+            background: linear-gradient(to bottom, #7e49c8, #56259E 50%);
+            border-radius: 25px;
+            -webkit-box-shadow: 0px 0px 5px 0px black;
+            -moz-box-shadow: 0px 0px 5px 0px black;
+            box-shadow: 0px 0px 5px 0px black;
+            border: 3px solid;
+        }
+        
+        html .m-wrap .o-watch-wrap .menu-open .t-options {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        html .m-wrap .o-watch-wrap .menu-open .o-timer-wrap {
+            top: -15px !important;
+            opacity: 0;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: auto;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer-wrap {
+            position: relative;
+            top: 0;
+            -webkit-transition: opacity .5s linear, top .5s linear;
+            transition: opacity .5s linear, top .5s linear;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .ring-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .ring-wrap .c-t {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .ring-wrap .c-t .c-c {
+            fill: transparent;
+            stroke: #EDEDEF;
+            stroke-width: 5;
+            stroke-dasharray: 612;
+            stroke-dashoffset: 612;
+            -webkit-transition: stroke-dashoffset 1s linear, opacity 1s linear;
+            transition: stroke-dashoffset 1s linear, opacity 1s linear;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer,
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time {
+            font-size: 60px;
+            width: 200px;
+            height: 200px;
+            border: 5px solid #7e49c8;
+            border-radius: 50%;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer .t-time,
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time .t-time {
+            text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .o-timer .oop,
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time .oop {
+            position: absolute;
+            bottom: 35px;
+            font-size: 18px;
+            color: #7e49c8;
+            left: 0;
+            right: 0;
+            margin: auto;
+            cursor: default;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options {
+            position: absolute;
+            top: 0px;
+            opacity: 0;
+            visibility: hidden;
+            -webkit-transition: opacity .3s linear, visibility .3s linear;
+            transition: opacity .3s linear, visibility .3s linear;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .b-revc {
+            transform: rotate(180deg);
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .o-opt-btn {
+            box-shadow: none;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .o-opt-btn:hover,
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .o-opt-btn:focus {
+            color: inherit;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .o-opt-btn:active {
+            color: lightgrey;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .o-opt-btn.display {
+            min-width: 70px;
+            cursor: default;
+            color: #EDEDEF;
+        }
+        
+        html .m-wrap .o-watch-wrap .watch-ui .o-ring .t-options .t-options-time {
+            border: none;
+        }
+        
+        html .m-wrap .o-watch-wrap .o-controllers {
+            text-align: center;
+        }
+        
+        html .m-wrap .o-watch-wrap .o-controllers .sp-btn {
+            position: relative;
+            background: none;
+            font-size: 16px;
+            outline: none;
+            box-shadow: none;
+        }
+        
+        html .m-wrap .o-watch-wrap .o-controllers .sp-btn:hover,
+        html .m-wrap .o-watch-wrap .o-controllers .sp-btn:focus {
+            color: inherit;
+        }
+        
+        html .m-wrap .o-watch-wrap .o-controllers .sp-btn:active {
+            color: #d2d2d7;
+        }
+        
+        html .m-wrap .o-watch-wrap .o-controllers .pause-btn {
+            font-size: 30px;
+            width: 60px;
+            height: 60px;
+            margin: auto;
+            background: #5fdeae;
+            border-radius: 50%;
+            margin-top: -20px;
+            -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+        }
+        
+        html .m-wrap .o-watch-wrap .o-controllers .pause-btn:active {
+            background: #35d599;
+            -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
+        }
+        
+        html .m-wrap .o-watch-wrap .o-controllers .in-btn {
+            position: absolute;
+            top: -1px;
+            left: 2px;
+            bottom: 0px;
+            right: 0;
+        }
 
-            $('.pause-btn span').removeClass('glyphicon-play').addClass('glyphicon-pause');
-            timerInt = setInterval(function() {
-                sec++;
-                perc = perc - (percm / 60);
+    </style>
+    <script>
+        /*Inspired by the Dribble shot: "Timer UI Design (IWatch)" by Mark Gerkules
+                         https://dribbble.com/shots/2926263-Timer-UI-Design-IWatch*/
 
-                if (sec >= 60) {
-                    sec = 0;
-                    min++;
-                    if (!(min >= mmin))
-                        perc = 612;
-                }
+        $(document).ready(function() {
+            var timer = 'true',
+                mmin = 15,
+                min = 0,
+                sec = 0,
+                perc = 612,
+                percm = perc;
 
-                if (sec <= 9)
-                    sec = '0' + sec;
+            startTimer(timer);
+            $('.o-opt-btn.display').html(mmin);
+            $('.t-time').text(min + ':0' + sec);
+            $('.oop').text('of ' + mmin);
 
+            $('.pause-btn').on('click', function() {
+                startTimer(timer);
+                if ($('.watch-ui').hasClass('menu-open'))
+                    $('.watch-ui').removeClass('menu-open');
+            });
+
+            $('.repeat-btn').on('click', function() {
+                min = 0;
+                sec = 0;
+                perc = 612;
+                if ($('.watch-ui').hasClass('menu-open'))
+                    $('.watch-ui').removeClass('menu-open');
                 $('.c-c').css('stroke-dashoffset', perc);
-                $('.t-time').text(min + ':' + sec);
+                $('.t-time').text(min + ':0' + sec);
+            });
 
-                if (min >= mmin) {
-                    timer = !timer;
-                    min = 0;
-                    sec = 0;
-                    perc = 612;
-                    $('.pause-btn span').removeClass('glyphicon-pause').addClass('glyphicon-play');
+            $('.menu-btn').on('click', function() {
+                $('.watch-ui').toggleClass('menu-open');
+            });
+
+            $('.o-opt-btn').on('click', function() {
+                if ($(this).hasClass('b-inc')) {
+                    if (mmin < 99)
+                        mmin++;
+                } else if ($(this).hasClass('b-dec')) {
+                    if (mmin > 1)
+                        mmin--;
+                }
+                $('.o-opt-btn.display').html(mmin);
+                $('.oop').text('of ' + mmin);
+            });
+
+            function startTimer(func) {
+                timer = !timer;
+                if (func) {
+
+                    $('.pause-btn span').removeClass('glyphicon-play').addClass('glyphicon-pause');
+                    timerInt = setInterval(function() {
+                        sec++;
+                        perc = perc - (percm / 60);
+
+                        if (sec >= 60) {
+                            sec = 0;
+                            min++;
+                            if (!(min >= mmin))
+                                perc = 612;
+                        }
+
+                        if (sec <= 9)
+                            sec = '0' + sec;
+
+                        $('.c-c').css('stroke-dashoffset', perc);
+                        $('.t-time').text(min + ':' + sec);
+
+                        if (min >= mmin) {
+                            timer = !timer;
+                            min = 0;
+                            sec = 0;
+                            perc = 612;
+                            $('.pause-btn span').removeClass('glyphicon-pause').addClass('glyphicon-play');
+                            clearInterval(timerInt);
+
+                        }
+                    }, 1000);
+                } else {
                     clearInterval(timerInt);
+                    $('.pause-btn span').removeClass('glyphicon-pause').addClass('glyphicon-play');
 
                 }
-            }, 1000);
-        } else {
-            clearInterval(timerInt);
-            $('.pause-btn span').removeClass('glyphicon-pause').addClass('glyphicon-play');
+            };
 
-        }
-    };
+        });
 
-});
-</script>
+    </script>
 </body>

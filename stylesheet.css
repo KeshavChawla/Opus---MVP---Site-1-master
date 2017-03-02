@@ -149,7 +149,17 @@ body {
   cursor: -webkit-grab;
   cursor: -moz-grab;
 }
-<<<<<<< HEAD
->>>>>>> parent of c30be32... I did this without Keshav
-=======
->>>>>>> parent of c30be32... I did this without Keshav
+.spotify {
+    position: relative;
+    min-height: 350px;
+    width: 100%;
+}
+
+.center {
+    text-align: center;
+}
+@media only screen and (max-width: 500px) {
+     .spotify{
+        min-height: 100px;
+    }
+}
