@@ -201,3 +201,7 @@ body {
 .numfield{
     max-width: 30px;
 }
+.bomb {
+    font-size: 100px;
+    color: pink;
+}
